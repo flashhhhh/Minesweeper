@@ -12,6 +12,7 @@ int CELL_SIZE = 50;
 
 int CURRENT_FLAGS;
 
+// current status of game
 GAME_STATUS gameStatus = OPTIONS;
 DIFFICULTY gameDifficulty;
 

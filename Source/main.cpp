@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     int numMusics = 4;
 
     while (!quit) {
-        if (Mix_PlayingMusic() == 0) {
+        /*if (Mix_PlayingMusic() == 0) {
             string Number; int number = rand() %numMusics + 1;
             stringstream ss;
             ss << number; ss >> Number;
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
             cout << number <<" "<< musicName <<'\n';
             music = Mix_LoadMUS(musicName.c_str());
             Mix_PlayMusic(music, 0);
-        }
+        }*/
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) quit = true;
@@ -63,8 +63,7 @@ int main(int argc, char* argv[]) {
 
                 if (checkDifficulty(x, y)) {
                     board.initBoard(gameDifficulty);
-                    board.generateBoard();
-                    createDifficulty();
+                    initDifficulty();
                 }
             }
         }
@@ -77,8 +76,10 @@ int main(int argc, char* argv[]) {
 
             x = currentMouse.second.x /CELL_SIZE;
             y = currentMouse.second.y /CELL_SIZE;
-            
+
             if (currentMouse.first == BUTTON_SPRITE_MOUSE_LEFT_DOWN) {
+                board.updateFirstLeftClick(x, y);
+                board.generateBoard();
                 board.leftClickCell(x, y);
             }
             else if (currentMouse.first == BUTTON_SPRITE_MOUSE_RIGHT_DOWN) {

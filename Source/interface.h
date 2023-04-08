@@ -1,3 +1,4 @@
+// Create difficulty options
 bool createOptions() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
@@ -47,6 +48,7 @@ bool createOptions() {
     return 1;
 }
 
+// which difficulty player choose
 bool checkDifficulty(int x, int y) {
     DIFFICULTY difficulty = UNDEFINED;
 
@@ -61,7 +63,8 @@ bool checkDifficulty(int x, int y) {
     return 1;
 }
 
-bool createDifficulty() {
+// Init window for correspond difficulty
+bool initDifficulty() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
 
@@ -80,6 +83,7 @@ bool createDifficulty() {
     return 1;
 }
 
+// Processing game when gameStatus is LOSE
 void processLose() {
     string text = "Game Over!";
     SDL_Color color = {0, 0, 0};
@@ -104,6 +108,7 @@ void processLose() {
     gameStatus = WAITING_FOR_PLAYER_RESPONSE;
 }
 
+// Processing game when gameStatus is WIN
 void processWin() {
     string text = "You Win!";
     SDL_Color color = {0, 0, 0};
@@ -128,6 +133,7 @@ void processWin() {
     gameStatus = WAITING_FOR_PLAYER_RESPONSE;
 }
 
+// check whether player wants to play again or quit game
 void getPlayerResponse(int x, int y) {
     SDL_Rect playAgainRect = {BOARD_WIDTH * CELL_SIZE + 75, SCREEN_HEIGHT * 70 /100, 225, SCREEN_HEIGHT * 10 /100};
     SDL_Rect quitRect = {BOARD_WIDTH * CELL_SIZE + 75, SCREEN_HEIGHT * 85 /100, 225, SCREEN_HEIGHT * 10 /100};
@@ -136,8 +142,9 @@ void getPlayerResponse(int x, int y) {
     else if (insideRectangle(x, y, quitRect.x, quitRect.y, quitRect.w, quitRect.h)) gameStatus = QUIT;
 }
 
+// render number of CURRENT_FLAG
 void printCurrentFlag() {
-    gallery.loadFromFile("../Image/flag.png");
+    gallery.loadImage("../Image/flag.png");
     gallery.render(BOARD_WIDTH * CELL_SIZE + 75, SCREEN_HEIGHT * 5 /100, 125, SCREEN_HEIGHT * 15 /100);
 
     string textTexture;

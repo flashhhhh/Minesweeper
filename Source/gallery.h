@@ -2,7 +2,7 @@ class Gallery {
     public:
         Gallery();
         ~Gallery();
-        bool loadFromFile(string path);
+        bool loadImage(string path);
         bool loadFromRenderedText(string textureText, SDL_Color color);
         void free();
         void render(int x, int y, int w, int h);
@@ -21,7 +21,8 @@ Gallery::~Gallery() {
     free();
 }
 
-bool Gallery::loadFromFile(string path) {
+// load image to gallery's texture
+bool Gallery::loadImage(string path) {
     free();
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 
@@ -42,6 +43,7 @@ bool Gallery::loadFromFile(string path) {
     return 1;
 }
 
+// load string text to gallery's texture
 bool Gallery::loadFromRenderedText(string textureText, SDL_Color textColor) {
     free();
 
@@ -61,6 +63,7 @@ bool Gallery::loadFromRenderedText(string textureText, SDL_Color textColor) {
     return 1;
 }
 
+// release gallery's texture
 void Gallery::free() {
     if (texture != NULL) {
         SDL_DestroyTexture(texture);
@@ -68,6 +71,7 @@ void Gallery::free() {
     }
 }
 
+// render gallery's texture
 void Gallery::render(int x, int y, int w, int h) {
     SDL_Rect rect = {x, y, w, h};
     SDL_RenderCopy(renderer, texture, NULL, &rect);

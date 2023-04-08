@@ -1,7 +1,8 @@
 Uint32 startTime;
 
+// render current time
 void printCurrentTime() {
-    gallery.loadFromFile("../Image/clock.png");
+    gallery.loadImage("../Image/clock.png");
     gallery.render(BOARD_WIDTH * CELL_SIZE + 75, SCREEN_HEIGHT * 20 /100, 125, SCREEN_HEIGHT * 15 /100);
 
     string timeText;

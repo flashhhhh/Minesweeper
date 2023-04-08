@@ -2,11 +2,11 @@ int xChange[] = {-1, -1, -1, 0, 0, 1, 1, 1};
 int yChange[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
 struct cell {
-    bool isBomb, isFlag, isShowed, isZero;
+    bool isBomb, isFlag, isShowed, isZero, canBeBomb;
     int numAdjBombs;
 
     cell() {
-        isBomb = isFlag = isShowed = isZero = 0;
+        isBomb = isFlag = isShowed = isZero = 0; canBeBomb = 1;
         numAdjBombs = 0;
     }
 };
@@ -14,45 +14,19 @@ struct cell {
 class BOARD {
     private:
         int numRows, numCols, numNonBombCells;
+        int xFirstLeftClick, yFirstLeftClick;
         vector<vector<cell> > bombBoard;
     
     public:
-        void generateBoard();
         void initBoard();
         void initBoard(int statusType);
+        void updateFirstLeftClick(int numRow, int numCol);
+        void generateBoard();
         void leftClickCell(int numRow, int numCol);
         void rightClickCell(int numRow, int numCol);
         void printBoard();
         void printScore();
 };
-
-void BOARD::generateBoard() {
-    for (int numFlag = 0; numFlag < CURRENT_FLAGS; ++numFlag) {
-        int numRow, numCol;
-
-        do {
-            numRow = rand() %numRows;
-            numCol = rand() %numCols;
-        }
-        while (bombBoard[numRow][numCol].isBomb);
-
-        bombBoard[numRow][numCol].isBomb = 1;
-    }
-
-    for (int numRow = 0; numRow < numRows; ++numRow)
-        for (int numCol = 0; numCol < numCols; ++numCol) {
-            if (bombBoard[numRow][numCol].isBomb) continue;
-
-            for (int e = 0; e < 8; ++e) {
-                int newRow = numRow + xChange[e]; int newCol = numCol + yChange[e];
-                if (newRow < 0 || newRow >= numRows || newCol < 0 || newCol >= numCols) continue;
-
-                bombBoard[numRow][numCol].numAdjBombs += bombBoard[newRow][newCol].isBomb;
-            }
-
-            if (bombBoard[numRow][numCol].numAdjBombs == 0) bombBoard[numRow][numCol].isZero = 1;
-        }
-}
 
 void BOARD::initBoard() {
     numRows = numCols = 0;
@@ -73,9 +47,75 @@ void BOARD::initBoard(int statusType) {
     }
 
     numNonBombCells = numRows * numCols - CURRENT_FLAGS;
+    xFirstLeftClick = -1; yFirstLeftClick = 0;
 
     bombBoard.clear(); bombBoard.resize(numRows);
     for (int numRow = 0; numRow < numRows; ++numRow) bombBoard[numRow].resize(numCols);
+}
+
+// Save if (numRow, numCol) is the first left click
+void BOARD::updateFirstLeftClick(int numRow, int numCol) {
+    if (xFirstLeftClick == -1 && yFirstLeftClick == 0) {
+        xFirstLeftClick = numRow;
+        yFirstLeftClick = numCol;
+    }
+}
+
+void BOARD::generateBoard() {
+    // If not the first left click
+    if (xFirstLeftClick == -1 || yFirstLeftClick == -1) return;
+
+    int numCells;
+    queue<pair<int,int> > mq;
+
+    if (gameDifficulty == EASY) numCells = 0;
+    else if (gameDifficulty == MEDIUM) numCells = Rand(10, 15);
+    else if (gameDifficulty == HARD) numCells = Rand(25, 35);
+
+    bombBoard[xFirstLeftClick][yFirstLeftClick].canBeBomb = 0; mq.emplace(xFirstLeftClick, yFirstLeftClick);
+
+    while (!mq.empty()) {
+        auto [curRow, curCol] = mq.front(); mq.pop();
+
+        for (int e = 0; e < 8; ++e) {
+            int newRow = curRow + xChange[e]; int newCol = curCol + yChange[e];
+
+            if (newRow < 0 || newRow >= numRows || newCol < 0 || newCol >= numCols || !bombBoard[newRow][newCol].canBeBomb || numCells == 0 || Rand(0,99) < 25)
+                continue;
+
+            --numCells;
+            bombBoard[newRow][newCol].canBeBomb = 0;
+            mq.emplace(newRow, newCol);
+        }
+    }
+
+    for (int numFlag = 0; numFlag < CURRENT_FLAGS; ++numFlag) {
+        int numRow, numCol;
+
+        do {
+            numRow = rand() %numRows;
+            numCol = rand() %numCols;
+        }
+        while (bombBoard[numRow][numCol].isBomb || !bombBoard[numRow][numCol].canBeBomb);
+
+        bombBoard[numRow][numCol].isBomb = 1;
+    }
+
+    for (int numRow = 0; numRow < numRows; ++numRow)
+        for (int numCol = 0; numCol < numCols; ++numCol) {
+            if (bombBoard[numRow][numCol].isBomb) continue;
+
+            for (int e = 0; e < 8; ++e) {
+                int newRow = numRow + xChange[e]; int newCol = numCol + yChange[e];
+                if (newRow < 0 || newRow >= numRows || newCol < 0 || newCol >= numCols) continue;
+
+                bombBoard[numRow][numCol].numAdjBombs += bombBoard[newRow][newCol].isBomb;
+            }
+
+            if (bombBoard[numRow][numCol].numAdjBombs == 0) bombBoard[numRow][numCol].isZero = 1;
+        }
+    
+    xFirstLeftClick = 0; yFirstLeftClick = -1;
 }
 
 void BOARD::leftClickCell(int numRow, int numCol) {
@@ -139,7 +179,7 @@ void BOARD::printBoard() {
     for (int numRow = 0; numRow < numRows; ++numRow)
         for (int numCol = 0; numCol < numCols; ++numCol) {
             if (bombBoard[numRow][numCol].isFlag) {
-                gallery.loadFromFile("../Image/flag.png");
+                gallery.loadImage("../Image/flag.png");
                 gallery.render(numRow * CELL_SIZE, numCol * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
             else if (bombBoard[numRow][numCol].isShowed) {
@@ -167,7 +207,7 @@ void BOARD::printBoard() {
             else if (gameStatus == LOSE && bombBoard[numRow][numCol].isBomb) {
                 drawRectangle(numRow * CELL_SIZE, numCol * CELL_SIZE, CELL_SIZE, CELL_SIZE, 0, 0, 0, 255);
 
-                gallery.loadFromFile("../Image/bomb.png");
+                gallery.loadImage("../Image/bomb.png");
                 gallery.render(numRow * CELL_SIZE, numCol * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }

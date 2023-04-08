@@ -73,3 +73,7 @@ string changeNumberToString(int number) {
     ss << number; ss >> str;
     return str;
 }
+
+int Rand(int l, int r) {
+    return rand() % (r - l + 1) + l;
+}

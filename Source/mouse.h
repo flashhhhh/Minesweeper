@@ -16,6 +16,7 @@ class BUTTON {
         pair<ButtonSprite, SDL_Point> processClick();
 };
 
+// control mouse's cursor
 BUTTON button;
 
 BUTTON::BUTTON() {
