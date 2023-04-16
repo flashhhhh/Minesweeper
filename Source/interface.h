@@ -1,4 +1,3 @@
-// Create options
 void createOptions() {
     gallery.render(START_GAME_BACKGROUND, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     gameStatus = INITIALIZING;
@@ -19,13 +18,6 @@ void printBackground() {
     }
 }
 
-void printCurrentDifficulty() {
-    drawRectangle(easyRect, 0, 0, 255, 255);
-    drawRectangle(mediumRect, 0, 0, 255, 255);
-    drawRectangle(hardRect, 0, 0, 255, 255);
-}
-
-// render number of CURRENT_FLAG
 void printCurrentFlag() {
     string textTexture;
     SDL_Color color;
@@ -36,11 +28,8 @@ void printCurrentFlag() {
 
     gallery.loadText(textTexture, color);
     gallery.render(FREE, &flagRect);
-
-    //drawRectangle(flagRect, 0, 0, 255, 255);
 }
 
-// render current time
 void printCurrentTime() {
     string timeText;
     SDL_Color color;
@@ -59,34 +48,11 @@ void printCurrentTime() {
 
     gallery.loadText(timeText, color);
     gallery.render(FREE, &timeRect);
-
-    //drawRectangle(timeRect, 0, 0, 255, 255);
 }
 
-void printLoudSpeakerButton() {
-    drawRectangle(loudSpeakerButton, 0, 0, 255, 255);
-}
-
-void printExitButton() {
-    drawRectangle(exitButton, 0, 0, 255, 255);
-}
-
-void printMode() {
-    drawRectangle(darkMode, 0, 0, 255, 255);
-    drawRectangle(lightMode, 0, 0, 255, 255);
-}
-
-// Print Screen
 void printScreen(BOARD *board) {
     printBackground();
-
     board->printBoard();
-
-    //printCurrentDifficulty();
-
     printCurrentFlag();
     printCurrentTime();
-    //printLoudSpeakerButton();
-    //printExitButton();
-    //printMode();
 }

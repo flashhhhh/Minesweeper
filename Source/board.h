@@ -179,7 +179,6 @@ void BOARD::printBoard() {
     for (int numRow = 0; numRow < numRows; ++numRow)
         for (int numCol = 0; numCol < numCols; ++numCol) {
             if (bombBoard[numRow][numCol].isFlag) {
-                //gallery.loadImage("../Image/flag.png");
                 if (mode == DARK) gallery.render(DARK_FLAG, X + numRow * CELL_SIZE, Y + numCol * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 else gallery.render(LIGHT_FLAG, X + numRow * CELL_SIZE, Y + numCol * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }

@@ -92,36 +92,37 @@ void Gallery::render(textureName name, SDL_Rect *rect) {
     SDL_RenderCopy(renderer, texture[name], NULL, rect);
 }
 
+// load image to gallery's textures
 void createGalleryList() {
-    gallery.updateTextureList(number1, "../Image/1.png");
-    gallery.updateTextureList(number2, "../Image/2.png");
-    gallery.updateTextureList(number3, "../Image/3.png");
-    gallery.updateTextureList(number4, "../Image/4.png");
-    gallery.updateTextureList(number5, "../Image/5.png");
-    gallery.updateTextureList(number6, "../Image/6.png");
-    gallery.updateTextureList(number7, "../Image/7.png");
-    gallery.updateTextureList(number8, "../Image/8.png");
+    gallery.updateTextureList(number1, "Image/1.png");
+    gallery.updateTextureList(number2, "Image/2.png");
+    gallery.updateTextureList(number3, "Image/3.png");
+    gallery.updateTextureList(number4, "Image/4.png");
+    gallery.updateTextureList(number5, "Image/5.png");
+    gallery.updateTextureList(number6, "Image/6.png");
+    gallery.updateTextureList(number7, "Image/7.png");
+    gallery.updateTextureList(number8, "Image/8.png");
 
-    gallery.updateTextureList(LIGHT_FLAG, "../Image/light_flag.png");
-    gallery.updateTextureList(DARK_FLAG, "../Image/dark_flag.png");
+    gallery.updateTextureList(LIGHT_FLAG, "Image/light_flag.png");
+    gallery.updateTextureList(DARK_FLAG, "Image/dark_flag.png");
 
-    gallery.updateTextureList(LIGHT_BOMB, "../Image/light_bomb.png");
-    gallery.updateTextureList(DARK_BOMB, "../Image/dark_bomb.png");
+    gallery.updateTextureList(LIGHT_BOMB, "Image/light_bomb.png");
+    gallery.updateTextureList(DARK_BOMB, "Image/dark_bomb.png");
     
-    gallery.updateTextureList(EASY_BACKGROUND, "../Image/easy_background.png");
-    gallery.updateTextureList(MEDIUM_BACKGROUND, "../Image/medium_background.png");
-    gallery.updateTextureList(HARD_BACKGROUND, "../Image/hard_background.png");
+    gallery.updateTextureList(EASY_BACKGROUND, "Image/easy_background.png");
+    gallery.updateTextureList(MEDIUM_BACKGROUND, "Image/medium_background.png");
+    gallery.updateTextureList(HARD_BACKGROUND, "Image/hard_background.png");
 
-    gallery.updateTextureList(EASY_MUTE_BACKGROUND, "../Image/easy_mute_background.png");
-    gallery.updateTextureList(MEDIUM_MUTE_BACKGROUND, "../Image/medium_mute_background.png");
-    gallery.updateTextureList(HARD_MUTE_BACKGROUND, "../Image/hard_mute_background.png");
+    gallery.updateTextureList(EASY_MUTE_BACKGROUND, "Image/easy_mute_background.png");
+    gallery.updateTextureList(MEDIUM_MUTE_BACKGROUND, "Image/medium_mute_background.png");
+    gallery.updateTextureList(HARD_MUTE_BACKGROUND, "Image/hard_mute_background.png");
 
-    gallery.updateTextureList(START_GAME_BACKGROUND, "../Image/start_game_background.png");
+    gallery.updateTextureList(START_GAME_BACKGROUND, "Image/start_game_background.png");
 
-    gallery.updateTextureList(LIGHT_MODE_CELL, "../Image/light_mode_cell.png");
-    gallery.updateTextureList(DARK_MODE_CELL, "../Image/dark_mode_cell.png");
-    gallery.updateTextureList(LIGHT_ZERO_CELL, "../Image/light_zero_cell.png");
-    gallery.updateTextureList(DARK_ZERO_CELL, "../Image/dark_zero_cell.png");
+    gallery.updateTextureList(LIGHT_MODE_CELL, "Image/light_mode_cell.png");
+    gallery.updateTextureList(DARK_MODE_CELL, "Image/dark_mode_cell.png");
+    gallery.updateTextureList(LIGHT_ZERO_CELL, "Image/light_zero_cell.png");
+    gallery.updateTextureList(DARK_ZERO_CELL, "Image/dark_zero_cell.png");
 }
 
 textureName changeNumberToTextureName(int number) {

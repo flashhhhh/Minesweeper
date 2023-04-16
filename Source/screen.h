@@ -1,6 +1,7 @@
 SDL_Window* window = NULL;
 SDL_Renderer* renderer;
 TTF_Font* gFont;
+Mix_Music* music;
 
 int SCREEN_WIDTH;
 int SCREEN_HEIGHT;
@@ -21,7 +22,10 @@ void initEverything() {
 
     // Create TTF
     TTF_Init();
-    gFont = TTF_OpenFont("../Font/main_font.ttf", 24);
+    gFont = TTF_OpenFont("Font/main_font.ttf", 24);
+
+    // Create Music and Sound
+    Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 1024 );
 }
 
 // finish SDL

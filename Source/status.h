@@ -10,8 +10,8 @@ enum MODE {
     DARK, LIGHT
 };
 
-int X, Y;
-int BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE;
+// properties of the board
+int X, Y, BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE;
 
 // current flags of game
 int CURRENT_FLAGS;
@@ -22,24 +22,19 @@ GAME_STATUS gameStatus;
 // current difficulty of game
 DIFFICULTY gameDifficulty;
 
-//
+// check whether the sound is mute
 bool isMute;
 
-//
+// dark mode or light mode
 MODE mode;
 
-int loseIndex, winIndex;
-int numLoseAnimation, numWinAnimation;
+// render win or lose animation
+int loseIndex, winIndex, numLoseAnimation, numWinAnimation;
 
-//
-SDL_Rect newGameRect, quitRect;
-SDL_Rect flagRect, timeRect;
-SDL_Rect loudSpeakerButton, exitButton;
-SDL_Rect darkMode, lightMode;
-SDL_Rect easyRect, mediumRect, hardRect;
-SDL_Rect winTimeRect, bestRect;
+// hitbox of some features
+SDL_Rect newGameRect, quitRect, flagRect, timeRect, loudSpeakerButton, exitButton, darkMode, lightMode, easyRect, mediumRect, hardRect, winTimeRect, bestRect;
 
-// control game time
+// control the time of game
 Uint32 startTime, prevTime, bestTime;
 
 Uint32 getCurrentTime();
@@ -61,6 +56,7 @@ void setupGame() {
     numLoseAnimation = 45; numWinAnimation = 62;
 }
 
+// setup properties of game for each DIFFICULTY
 void setupParameter(DIFFICULTY statusType) {
     if (statusType == EASY) {
         BOARD_WIDTH = 10;
@@ -167,7 +163,7 @@ void getBestTime() {
     else if (gameDifficulty == MEDIUM) path = "medium";
     else if (gameDifficulty == HARD) path = "hard";
 
-    path = "../Database/" + path + "BestTime.txt";
+    path = "Database/" + path + "BestTime.txt";
 
     ifstream file(path.c_str());
     file >> bestTime;
@@ -179,7 +175,7 @@ void updateBestTime() {
     else if (gameDifficulty == MEDIUM) path = "medium";
     else if (gameDifficulty == HARD) path = "hard";
 
-    path = "../Database/" + path + "BestTime.txt";
+    path = "Database/" + path + "BestTime.txt";
 
     ofstream file(path.c_str());
     file << bestTime;

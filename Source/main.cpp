@@ -23,10 +23,6 @@ int main(int argc, char* argv[]) {
 
     SDL_Event event; bool quit = false;
 
-    Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 1024 );
-    Mix_Music* music;
-    int numMusics = 4;
-
     BOARD board;
 
     while (!quit) {
@@ -45,7 +41,7 @@ int main(int argc, char* argv[]) {
         else if (gameStatus == INITIALIZING) {
             pair<ButtonSprite, SDL_Point> currentMouse = button.processClick();
 
-            if (currentMouse.first != BUTTON_SPRITE_MOUSE_OUT) {
+            if (currentMouse.first == BUTTON_SPRITE_MOUSE_LEFT_DOWN) {
                 int x = currentMouse.second.x;
                 int y = currentMouse.second.y;
 
@@ -62,19 +58,21 @@ int main(int argc, char* argv[]) {
             printScreen(&board);
 
             if (gameStatus == LOSE) {
+                // Play losing sound
                 if (loseIndex == 0) {
                     SDL_Delay(1000);
                     
                     if (!isMute) {
-                        string musicName = "../Music/losing.wav";
+                        string musicName = "Music/losing.wav";
                         music = Mix_LoadMUS(musicName.c_str());
                         Mix_PlayMusic(music, 0);
                     }
                 }
 
+                // render losing animation
                 if (loseIndex >= 0) {
                     string path = changeNumberToString(loseIndex);
-                    path = "../Image/losing/losing-" + path + ".png";
+                    path = "Image/losing/losing-" + path + ".png";
 
                     gallery.loadImage(path);
                     gallery.render(FREE, X, Y, BOARD_WIDTH * CELL_SIZE, BOARD_HEIGHT * CELL_SIZE);
@@ -85,19 +83,21 @@ int main(int argc, char* argv[]) {
                 if (loseIndex + 1 < numLoseAnimation) ++loseIndex;
             }
             else if (gameStatus == WIN) {
+                // Play winning sound
                 if (winIndex == 0) {
                     SDL_Delay(1000);
 
                     if (!isMute) {
-                        string musicName = "../Music/winning.wav";
+                        string musicName = "Music/winning.wav";
                         music = Mix_LoadMUS(musicName.c_str());
                         Mix_PlayMusic(music, 0);
                     }
                 }
 
+                // render winnng animation and score
                 if (winIndex >= 0) {
                     string path = changeNumberToString(winIndex);
-                    path = "../Image/winning/winning-" + path + ".png";
+                    path = "Image/winning/winning-" + path + ".png";
 
                     gallery.loadImage(path);
                     gallery.render(FREE, X, Y, BOARD_WIDTH * CELL_SIZE, BOARD_HEIGHT * CELL_SIZE);
@@ -166,7 +166,7 @@ int main(int argc, char* argv[]) {
                     int numShowedCell = board.leftClickCell(x, y);
 
                     if (!isMute) {
-                        string musicName = "../Music/";
+                        string musicName = "Music/";
                         if (numShowedCell == 1) musicName += "just_one_cell.wav";
                         else if (numShowedCell >= 2 && numShowedCell <= 10) musicName += "quite_large_area.wav";
                         else if (numShowedCell > 10) musicName += "very_large_area.wav";
@@ -178,8 +178,9 @@ int main(int argc, char* argv[]) {
                 else if (currentMouse.first == BUTTON_SPRITE_MOUSE_RIGHT_DOWN) {
                     int type = board.rightClickCell(x, y);
 
+                    // Play flag or unflag sound
                     if (!isMute) {
-                        string musicName = "../Music/";
+                        string musicName = "Music/";
                         if (type == 1) musicName += "flag.wav";
                         else if (type == 0) musicName += "unflag.wav";
 
