@@ -1,13 +1,10 @@
 # Minesweeper
----
 
 ## Introduction
----
 A game project made with SDL2 C++.
 Watch game's demo: 
 
 ## Technologies
----
 **Project uses:**
 + Visual Studio Code (VSCode).
 + SDL2 devel 2.0.20 mingw.
@@ -16,7 +13,6 @@ Watch game's demo:
 + SDL2 mixer devel 2.0.4 mingw.
 
 ## How to compile and play
----
 - **Linux**:
   - Clone this repository to your computer.
   - Open command line inside the cloned folder, cd to folder Source.
@@ -25,7 +21,6 @@ Watch game's demo:
 - **Window**: (Will be updated soon).
 
 ## Contents
----
 #### How to play
 You got a rectangle board which has some cells containing bomb. You must find out all of the bomb cells in the board by clearing all of the non-bomb cells.
 
@@ -50,6 +45,5 @@ And here are some types of feature in this game:
 - However, the first left-click is always safe. It means that the first cell you left-clicking can't contain bomb. Moreover, it will create a large area that doesn't contain bomb (Play game or watch game's demo to understand more clearly).
 
 ## Algorithm
----
 - When you left-click to a zero-cell (a cell doesn't have any neighbor cell containing bomb), you must flood fill to all of the neighbor cell of it and so on. Use BFS to do it.
 - The algorithm is similar in your first left-clicking to create a non-bomb cell area. Just BFS colaborates with probability.
