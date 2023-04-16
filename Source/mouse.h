@@ -2,6 +2,7 @@ enum ButtonSprite {
     BUTTON_SPRITE_MOUSE_OUT,
     BUTTON_SPRITE_MOUSE_LEFT_DOWN,
     BUTTON_SPRITE_MOUSE_RIGHT_DOWN,
+    BUTTON_SPRITE_MOUSE_LEFT_UP,
 };
 
 class BUTTON {
@@ -38,6 +39,13 @@ void BUTTON::handleEvent(SDL_Event* event) {
         setPosition(x, y);
         if (event->button.button == SDL_BUTTON_LEFT) currentSprite = BUTTON_SPRITE_MOUSE_LEFT_DOWN;
         else if (event->button.button == SDL_BUTTON_RIGHT) currentSprite = BUTTON_SPRITE_MOUSE_RIGHT_DOWN;
+    }
+    else if (event->type == SDL_MOUSEBUTTONUP) {
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+
+        setPosition(x, y);
+        if (event->button.button == SDL_BUTTON_LEFT) currentSprite = BUTTON_SPRITE_MOUSE_LEFT_UP;
     }
 }
 
