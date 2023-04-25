@@ -1,4 +1,4 @@
-void createOptions() {
+void printStartingBackground() {
     gallery.render(START_GAME_BACKGROUND, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     gameStatus = INITIALIZING;
 }
