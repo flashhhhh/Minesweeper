@@ -57,16 +57,16 @@ void BOARD::generateBoard() {
     if (xFirstLeftClick == -1 || yFirstLeftClick == -1) return;
 
     int numCells;
-    queue<pair<int,int> > mq;
+    Queue<pair<int,int> > *myQueue = new Queue<pair<int,int> >;  //queue<pair<int,int> > mq;
 
     if (gameDifficulty == EASY) numCells = 0;
     else if (gameDifficulty == MEDIUM) numCells = Rand(10, 15);
     else if (gameDifficulty == HARD) numCells = Rand(25, 35);
 
-    bombBoard[xFirstLeftClick][yFirstLeftClick].canBeBomb = 0; mq.emplace(xFirstLeftClick, yFirstLeftClick);
+    bombBoard[xFirstLeftClick][yFirstLeftClick].canBeBomb = 0; myQueue->add_tail({xFirstLeftClick, yFirstLeftClick});
 
-    while (!mq.empty()) {
-        auto [curRow, curCol] = mq.front(); mq.pop();
+    while (!myQueue->isEmpty()) {
+        auto [curRow, curCol] = myQueue->getHead(); myQueue->delete_head();
 
         for (int e = 0; e < 8; ++e) {
             int newRow = curRow + xChange[e]; int newCol = curCol + yChange[e];
@@ -76,7 +76,7 @@ void BOARD::generateBoard() {
 
             --numCells;
             bombBoard[newRow][newCol].canBeBomb = 0;
-            mq.emplace(newRow, newCol);
+            myQueue->add_tail({newRow, newCol});
         }
     }
 
@@ -121,13 +121,13 @@ int BOARD::leftClickCell(int numRow, int numCol) {
 
     bombBoard[numRow][numCol].isFlood = 1;
 
-    queue<pair<int,int> > myQueue;
-    myQueue.emplace(numRow, numCol);
+    Queue<pair<int,int> > *myQueue = new Queue<pair<int,int> >; //queue<pair<int,int> > myQueue;
+    myQueue->add_tail({numRow, numCol});
 
     int numShowedCell = 0;
 
-    while (!myQueue.empty()) {
-        auto [curRow, curCol] = myQueue.front(); myQueue.pop();
+    while (!myQueue->isEmpty()) {
+        auto [curRow, curCol] = myQueue->getHead(); myQueue->delete_head();
         
         if (!bombBoard[curRow][curCol].isFlag) {
             bombBoard[curRow][curCol].isShowed = 1;
@@ -143,7 +143,7 @@ int BOARD::leftClickCell(int numRow, int numCol) {
             if (newRow < 0 || newRow >= numRows || newCol < 0 || newCol >= numCols || bombBoard[newRow][newCol].isFlood) continue;
             
             bombBoard[newRow][newCol].isFlood = 1;
-            myQueue.emplace(newRow, newCol);
+            myQueue->add_tail({newRow, newCol});
         }
     }
 
