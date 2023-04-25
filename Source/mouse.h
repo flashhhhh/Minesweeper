@@ -7,8 +7,8 @@ enum ButtonSprite {
 
 class BUTTON {
     private:
-        SDL_Point cursorPosition;
-        ButtonSprite currentSprite;
+        SDL_Point cursorPosition; // where the mouse is
+        ButtonSprite currentSprite; // what the mouse is doing
     
     public:
         BUTTON();
