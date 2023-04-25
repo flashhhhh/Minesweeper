@@ -6,7 +6,8 @@
 
 using namespace std;
 
-#include "screen.h"
+#include "myqueue.h"
+#include "common_function.h"
 #include "gallery.h"
 #include "mouse.h"
 #include "time.h"
@@ -31,10 +32,10 @@ int main(int argc, char* argv[]) {
             button.handleEvent(&event);
         }
 
-        if (gameStatus == OPTIONS) {
+        if (gameStatus == STARTING) {
             SDL_RenderClear(renderer);
 
-            createOptions();
+            printStartingBackground();
 
             SDL_RenderPresent(renderer);
         }
@@ -131,9 +132,11 @@ int main(int argc, char* argv[]) {
 
             x = currentMouse.second.x; y = currentMouse.second.y;
 
+            // check if it is a left-clik
             if (currentMouse.first == BUTTON_SPRITE_MOUSE_LEFT_DOWN) {
                 if (insideRectangle(x, y, exitButton)) quit = true;
                 
+                // difficulty
                 if (insideRectangle(x, y, easyRect)) {
                     setupParameter(EASY);
                     board.initBoard(gameDifficulty);
@@ -147,19 +150,23 @@ int main(int argc, char* argv[]) {
                     board.initBoard(gameDifficulty);
                 }
                 
+                // on/off loudspeaker
                 if (insideRectangle(x, y, loudSpeakerButton)) {
                     if (isMute == 0) isMute = 1;
                     else isMute = 0;
                 }
                 
+                // change mode
                 if (insideRectangle(x, y, darkMode)) mode = DARK;
                 else if (insideRectangle(x, y, lightMode)) mode = LIGHT;
             }
             
+            // check whether your mouse's cursor is inside the board
             if (insideRectangle(currentMouse.second.x, currentMouse.second.y, X, Y, BOARD_WIDTH * CELL_SIZE, BOARD_HEIGHT * CELL_SIZE)) {
                 x = (currentMouse.second.x - X) /CELL_SIZE;
                 y = (currentMouse.second.y - Y) /CELL_SIZE;
 
+                // left-click to cell (x,y)
                 if (currentMouse.first == BUTTON_SPRITE_MOUSE_LEFT_DOWN) {
                     board.updateFirstLeftClick(x, y);
                     board.generateBoard();
@@ -175,6 +182,8 @@ int main(int argc, char* argv[]) {
                         Mix_PlayMusic(music, 0);
                     }
                 }
+                
+                // right click to cell (x,y)
                 else if (currentMouse.first == BUTTON_SPRITE_MOUSE_RIGHT_DOWN) {
                     int type = board.rightClickCell(x, y);
 
