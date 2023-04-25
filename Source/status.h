@@ -3,7 +3,7 @@ enum DIFFICULTY {
 };
 
 enum GAME_STATUS {
-    OPTIONS, INITIALIZING, RUNNING, LOSE, WIN
+    STARTING, INITIALIZING, RUNNING, LOSE, WIN
 };
 
 enum MODE {
@@ -12,13 +12,11 @@ enum MODE {
 
 // properties of the board
 int X, Y, BOARD_WIDTH, BOARD_HEIGHT, CELL_SIZE;
-
 // current flags of game
 int CURRENT_FLAGS;
 
 // current status of game
 GAME_STATUS gameStatus;
-
 // current difficulty of game
 DIFFICULTY gameDifficulty;
 
@@ -45,7 +43,7 @@ void setupGame() {
     SCREEN_WIDTH = 1920;
     SCREEN_HEIGHT = 1080;
 
-    gameStatus = OPTIONS;
+    gameStatus = STARTING;
 
     newGameRect = {865, 465, 275, 175};
     quitRect = {870, 800, 280, 195};
