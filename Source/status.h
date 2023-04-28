@@ -161,7 +161,7 @@ void getBestTime() {
     else if (gameDifficulty == MEDIUM) path = "medium";
     else if (gameDifficulty == HARD) path = "hard";
 
-    path = "Database/" + path + "BestTime.txt";
+    path = "Data/" + path + "BestTime.txt";
 
     ifstream file(path.c_str());
     file >> bestTime;
@@ -173,7 +173,7 @@ void updateBestTime() {
     else if (gameDifficulty == MEDIUM) path = "medium";
     else if (gameDifficulty == HARD) path = "hard";
 
-    path = "Database/" + path + "BestTime.txt";
+    path = "Data/" + path + "BestTime.txt";
 
     ofstream file(path.c_str());
     file << bestTime;
