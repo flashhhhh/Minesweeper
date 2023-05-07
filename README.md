@@ -22,27 +22,37 @@ Watch game's demo:
 ## How to compile and play
 
 - **Linux**:
-
+  - Turn on your terminal.
+  - Set up SDL2 in your computer:
+    - Type:
+    ```
+    sudo apt-cache search libsdl2
+    ```
+    - Then type:
+    ```
+    sudo apt-get install libsdl2-dev
+    ```
   - Clone this repository to your computer.
-  - Open command line inside the cloned folder.
+  - Cd to the cloned folder (minesweeper).
   - Type:
 
   ```
-  g++ Source/main.cpp -w -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -o main  (or "make" instead)
+  g++ Source/main.cpp -w -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -o main 
   ```
 
-  - main file will be generated. Open the file to run the game (Double click or run ./main in the cmd).
+  - `main` file will be generated. Open the file to run the game (Double click or run ./main in terminal).
 - **Window**:
 
+  - Turn on your terminal.
   - Clone this repository to your computer.
-  - Open command line inside the cloned folder (minesweeper).
+  - Cd to the cloned folder (minesweeper).
   - Type:
 
   ```
   g++ Source/main.cpp -Iinclude -Llib -w -Wl,-subsystem,windows -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -o main
   ```
 
-  - `main.exe` file will be generated. Open the file to run the game (Double click or run "main.exe" in the cmd).
+  - `main.exe` file will be generated. Open the file to run the game (Double click or run "main.exe" in terminal).
 
 ## Contents
 ---
