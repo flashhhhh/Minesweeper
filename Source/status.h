@@ -165,6 +165,7 @@ void getBestTime() {
 
     ifstream file(path.c_str());
     file >> bestTime;
+    if (bestTime == 0) bestTime = 1000000000;
 }
 
 void updateBestTime() {

@@ -57,7 +57,7 @@ void BOARD::generateBoard() {
     if (xFirstLeftClick == -1 || yFirstLeftClick == -1) return;
 
     int numCells;
-    Queue<pair<int,int> > *myQueue = new Queue<pair<int,int> >;  //queue<pair<int,int> > mq;
+    Queue<pair<int,int> > *myQueue = new Queue<pair<int,int> >;
 
     if (gameDifficulty == EASY) numCells = 0;
     else if (gameDifficulty == MEDIUM) numCells = Rand(10, 15);
@@ -121,7 +121,7 @@ int BOARD::leftClickCell(int numRow, int numCol) {
 
     bombBoard[numRow][numCol].isFlood = 1;
 
-    Queue<pair<int,int> > *myQueue = new Queue<pair<int,int> >; //queue<pair<int,int> > myQueue;
+    Queue<pair<int,int> > *myQueue = new Queue<pair<int,int> >;
     myQueue->add_tail({numRow, numCol});
 
     int numShowedCell = 0;

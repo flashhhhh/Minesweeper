@@ -31,20 +31,9 @@ void printCurrentFlag() {
 }
 
 void printCurrentTime() {
-    string timeText;
-    SDL_Color color;
     Uint32 currentTime = getCurrentTime();
-
-    int minute = currentTime /60; int second = currentTime % 60;
-
-    string minuteText = changeNumberToString(minute);
-    while (minuteText.size() < 2) minuteText = "0" + minuteText;
-
-    string secondText = changeNumberToString(second);
-    while (secondText.size() < 2) secondText = "0" + secondText;
-
-    timeText = minuteText + ':' + secondText;
-    color = {255, 255, 255};
+    string timeText = changeTime(currentTime);
+    SDL_Color color = {255, 255, 255};
 
     gallery.loadText(timeText, color);
     gallery.render(FREE, &timeRect);

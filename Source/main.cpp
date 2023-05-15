@@ -132,7 +132,7 @@ int main(int argc, char* argv[]) {
 
             x = currentMouse.second.x; y = currentMouse.second.y;
 
-            // check if it is a left-clik
+            // check if it is a left-click
             if (currentMouse.first == BUTTON_SPRITE_MOUSE_LEFT_DOWN) {
                 if (insideRectangle(x, y, exitButton)) quit = true;
                 
